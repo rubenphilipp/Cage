@@ -41,6 +41,10 @@ const int stepsPerMotorRevolution = 32; // Number of steps per revolution of INT
 const int stepsPerOutputRevolution = stepsPerMotorRevolution * 64; // Steps per OUTPUT SHAFT of gear reduction
 Stepper stepper(stepsPerMotorRevolution, stepper1, stepper3, stepper2, stepper4);
 
+/* initialize mallet position */
+
+const int malletPos = 170;
+
 // initialize further global variables
 byte registerData = 0; // shift register data
 
@@ -48,7 +52,7 @@ byte registerData = 0; // shift register data
 void setup() {
   /* set up mallet */
   mallet.attach(SERVO);  // attach the mallet servo
-  mallet.write(180); //Reset mallet
+  mallet.write(malletPos); //Reset mallet
 
   /* set up stepper: */
   stepper.setSpeed(700); // speed (max: ~1200 rpm):
@@ -67,15 +71,25 @@ void setup() {
 
   updateShiftRegister(); //initial shift register update
 
+  /* initialize LEDs */
+  bitSet(registerData, 0);
+  bitClear(registerData, 1);
+  bitSet(registerData, 2);
+
 }
 
 void loop() {
-  //malletBeat();
+  malletBeat();
   
   if(bitRead(registerData, 0) == 0){
     bitSet(registerData, 0);
   } else {
     bitClear(registerData, 0);
+  }
+  if(bitRead(registerData, 1) == 0){
+    bitSet(registerData, 1);
+  } else {
+    bitClear(registerData, 1);
   }
   updateShiftRegister();
 
@@ -89,12 +103,12 @@ void loop() {
   /*stepper.setSpeed(1200);
   stepper.step(stepsPerOutputRevolution/8);*/
   
-  digitalWrite(DCENABLE, HIGH); // enable on
+  /*digitalWrite(DCENABLE, HIGH); // enable on
   digitalWrite(DCDIRA, HIGH);
   digitalWrite(DCDIRB, LOW);
   delay(500);
   
-  digitalWrite(DCENABLE, LOW); // enable off
+  digitalWrite(DCENABLE, LOW); // enable off*/
   delay(2000);
 
 }
@@ -104,9 +118,9 @@ void loop() {
 
 // perform mallet beat
 void malletBeat() {
-  mallet.write(160);
+  mallet.write(137);
   delay(200);
-  mallet.write(180);
+  mallet.write(malletPos);
 }
 
 
