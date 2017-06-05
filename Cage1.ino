@@ -72,9 +72,10 @@ void setup() {
   updateShiftRegister(); //initial shift register update
 
   /* initialize LEDs */
-  bitSet(registerData, 0);
-  bitClear(registerData, 1);
-  bitSet(registerData, 2);
+  bitSet(registerData, 0); //clock red
+  bitClear(registerData, 1); //clock blue
+  bitSet(registerData, 2); //interior led
+  bitSet(registerData, 3); //clock dim yellow (10k resistor)
 
 }
 
@@ -94,21 +95,21 @@ void loop() {
   updateShiftRegister();
 
   /* buzzer */
-  /*bitSet(registerData, 3);
+  bitSet(registerData, 7);
   updateShiftRegister();
-  delay(100);
-  bitClear(registerData, 3);
-  updateShiftRegister();*/
+  delay(50);
+  bitClear(registerData, 7);
+  updateShiftRegister();
   
-  /*stepper.setSpeed(1200);
-  stepper.step(stepsPerOutputRevolution/8);*/
+  stepper.setSpeed(1000);
+  stepper.step(stepsPerOutputRevolution/4);
   
-  /*digitalWrite(DCENABLE, HIGH); // enable on
+  digitalWrite(DCENABLE, HIGH); // enable on
   digitalWrite(DCDIRA, HIGH);
   digitalWrite(DCDIRB, LOW);
   delay(500);
   
-  digitalWrite(DCENABLE, LOW); // enable off*/
+  digitalWrite(DCENABLE, LOW); // enable off
   delay(2000);
 
 }
