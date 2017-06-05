@@ -45,8 +45,14 @@ Stepper stepper(stepsPerMotorRevolution, stepper1, stepper3, stepper2, stepper4)
 
 const int malletPos = 170;
 
-// initialize further global variables
+/* initialize further global variables */
 byte registerData = 0; // shift register data
+
+/* LED IDs (referring to bit in registerData byte) */
+const int ledClockRed = 0; //clock red
+const int ledClockBlue = 1; //clock blue
+const int ledClockYellow = 3; //clock dim yellow (10k resistor)
+const int ledInterior = 2; //interior LED
 
 
 void setup() {
@@ -72,63 +78,14 @@ void setup() {
   updateShiftRegister(); //initial shift register update
 
   /* initialize LEDs */
-  bitSet(registerData, 0); //clock red
-  bitClear(registerData, 1); //clock blue
-  bitSet(registerData, 2); //interior led
-  bitSet(registerData, 3); //clock dim yellow (10k resistor)
+  bitSet(registerData, ledClockRed); //clock red
+  bitClear(registerData, ledClockBlue); //clock blue
+  bitSet(registerData, ledInterior); //interior led
+  bitSet(registerData, ledClockYellow); //clock dim yellow (10k resistor)
 
 }
 
 void loop() {
-  malletBeat();
-  
-  if(bitRead(registerData, 0) == 0){
-    bitSet(registerData, 0);
-  } else {
-    bitClear(registerData, 0);
-  }
-  if(bitRead(registerData, 1) == 0){
-    bitSet(registerData, 1);
-  } else {
-    bitClear(registerData, 1);
-  }
-  updateShiftRegister();
+  testDrive1();
 
-  /* buzzer */
-  bitSet(registerData, 7);
-  updateShiftRegister();
-  delay(50);
-  bitClear(registerData, 7);
-  updateShiftRegister();
-  
-  stepper.setSpeed(1000);
-  stepper.step(stepsPerOutputRevolution/4);
-  
-  digitalWrite(DCENABLE, HIGH); // enable on
-  digitalWrite(DCDIRA, HIGH);
-  digitalWrite(DCDIRB, LOW);
-  delay(500);
-  
-  digitalWrite(DCENABLE, LOW); // enable off
-  delay(2000);
-
-}
-
-
-/* functions */
-
-// perform mallet beat
-void malletBeat() {
-  mallet.write(137);
-  delay(200);
-  mallet.write(malletPos);
-}
-
-
-//Update shift register using global registerData var
-void updateShiftRegister()
-{
-   digitalWrite(latchPin, LOW);
-   shiftOut(dataPin, clockPin, MSBFIRST, registerData);
-   digitalWrite(latchPin, HIGH);
 }
