@@ -16,3 +16,10 @@ void buzzSeq(int delayDuration) {
   disableBuzzer();
 }
 
+// just a short beep
+void shortBeep() {
+  enableBuzzer();
+  delay(100);
+  disableBuzzer();
+}
+

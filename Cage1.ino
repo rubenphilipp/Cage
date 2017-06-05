@@ -83,9 +83,11 @@ void setup() {
   bitSet(registerData, ledInterior); //interior led
   bitSet(registerData, ledClockYellow); //clock dim yellow (10k resistor)
 
+  Serial.begin(9600);
+
 }
 
 void loop() {
-  testDrive1();
+  random1();
 
 }
