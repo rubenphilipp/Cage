@@ -9,7 +9,7 @@ void testDrive1() {
   toggleLED(ledClockBlue);
 
   /* buzzer */
-  buzz();
+  buzzSeq(50);
 
   moveStepper(1000, 0.5);
   

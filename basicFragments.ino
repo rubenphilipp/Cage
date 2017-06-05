@@ -9,10 +9,10 @@ void malletBeat() {
   mallet.write(malletPos);
 }
 
-// perform buzzer noise
-void buzz() {
+// perform buzzer noise (sequential)
+void buzzSeq(int delayDuration) {
   enableBuzzer();
-  delay(50);
+  delay(delayDuration);
   disableBuzzer();
 }
 
