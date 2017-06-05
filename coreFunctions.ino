@@ -52,3 +52,15 @@ void stopDCMotor() {
   digitalWrite(DCENABLE, LOW); // enable off
 }
 
+
+//enable/disable buzzer
+void enableBuzzer() {
+  bitSet(registerData, 7);
+  updateShiftRegister();
+}
+
+void disableBuzzer() {
+  bitClear(registerData, 7);
+  updateShiftRegister();
+}
+

@@ -11,10 +11,8 @@ void malletBeat() {
 
 // perform buzzer noise
 void buzz() {
-  bitSet(registerData, 7);
-  updateShiftRegister();
+  enableBuzzer();
   delay(50);
-  bitClear(registerData, 7);
-  updateShiftRegister();
+  disableBuzzer();
 }
 
