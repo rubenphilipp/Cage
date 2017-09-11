@@ -9,3 +9,5 @@ Unfortunately there is no circuit diagram for the Arduino UNO wiring available. 
 
 ## The thing.
 
+[![Watch the video](http://img.youtube.com/vi/U8WOlvcEXTw/0.jpg)](https://youtu.be/U8WOlvcEXTw)
+*Click to watch it move*
